@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cardboard NU</title>
+<meta name="description" content="An unofficial course planner for Northwestern students: pick your classes and get quarter-by-quarter schedules with no time conflicts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Cardboard NU</h1>
+      <p class="lede">Pick the classes you want. Cardboard NU puts each one in a quarter and a section so nothing overlaps, and greys out anything that can't fit, with the reason.</p>
+    </div>
+    <div class="row">
+      <button id="btn-example" type="button">Load an example plan</button>
+      <button id="btn-share" type="button">Copy share link</button>
+      <button id="btn-export" type="button">Export</button>
+      <label class="btn" for="file-import">Import<input id="file-import" type="file" accept="application/json" hidden></label>
+      <button id="btn-clear" type="button">Start over</button>
+    </div>
+  </header>
+
+  <section class="panel setup" aria-labelledby="h-setup">
+    <h2 id="h-setup"><span class="step">1</span> Quarters to plan</h2>
+    <div id="quarters" class="chips"></div>
+    <p class="hint" id="data-note"></p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-groups">
+    <div class="phead">
+      <h2 id="h-groups"><span class="step">2</span> Your requirements</h2>
+      <button id="btn-add-group" type="button" class="primary">Add a group</button>
+    </div>
+    <p class="hint">Make a group for each requirement, like "Major core (take all)" or "Art 300-level (pick 2)". Search for courses and add them as options, then click the ones you want to take.</p>
+    <div class="search">
+      <label for="q" class="sr">Search courses</label>
+      <input id="q" type="search" placeholder="Search any course: ME 301, robotics, ART 390, Public Speaking…" autocomplete="off">
+      <div id="results" class="results" role="listbox" aria-label="Search results"></div>
+    </div>
+    <div id="groups" class="groups"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-sched">
+    <div class="phead">
+      <h2 id="h-sched"><span class="step">3</span> Your schedule</h2>
+      <span id="status" class="status"></span>
+    </div>
+    <div class="controls" id="controls"></div>
+    <div id="notice"></div>
+    <div class="quarters" id="schedule"></div>
+    <div class="legend">
+      <span><span class="badge official">published</span> from the published schedule</span>
+      <span><span class="badge est">estimate</span> last year's same quarter; re-check when the real schedule is posted</span>
+    </div>
+    <div class="row"><button id="btn-copy" type="button">Copy schedule as text</button></div>
+  </section>
+
+  <footer class="foot">
+    <p>Unofficial student project, not affiliated with or endorsed by Northwestern University. Times come from the public <a href="https://class-descriptions.northwestern.edu/">class descriptions</a> site and can change. Always confirm in CAESAR and with your adviser before registering. Your plan is saved only in this browser.</p>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="solver.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
