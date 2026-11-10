@@ -178,7 +178,7 @@
       const picks = all ? g.options : g.picks;
       const have = picks.length, need = all ? g.options.length : g.need;
       const head = el('div', { class: 'ghead' },
-        el('input', { class: 'gname', type: 'text', value: g.name, 'aria-label': 'Group name', onchange: e => { g.name = e.target.value || 'Untitled group'; update(); } }),
+        el('input', { class: 'gname', type: 'text', value: g.name, size: Math.max(12, g.name.length + 2), 'aria-label': 'Group name', onchange: e => { g.name = e.target.value || 'Untitled group'; update(); } }),
         el('div', { class: 'row' },
           el('label', {}, 'Take',
             el('select', { 'aria-label': 'How many to take', onchange: e => { const v = e.target.value; g.need = v === 'all' ? null : +v; g.picks = g.picks.slice(0, g.need || 0); S.idx = 0; update(); } },
@@ -247,7 +247,7 @@
         el('button', { type: 'button', disabled: lastSols.length < 2, onclick: () => { S.idx = (S.idx - 1 + lastSols.length) % lastSols.length; save(); renderSchedule(); } }, '← Previous'),
         el('span', { class: 'hint' }, lastSols.length ? `Arrangement ${S.idx + 1} of ${lastSols.length}${r.aborted || lastSols.length >= 250 ? '+' : ''}` : 'No arrangement'),
         el('button', { type: 'button', disabled: lastSols.length < 2, onclick: () => { S.idx = (S.idx + 1) % lastSols.length; save(); renderSchedule(); } }, 'Next →')),
-      Object.keys(S.pins).length ? el('button', { type: 'button', onclick: () => { S.pins = {}; S.idx = 0; update(); } }, 'Unlock all') : null);
+      ...(Object.keys(S.pins).length ? [el('button', { type: 'button', onclick: () => { S.pins = {}; S.idx = 0; update(); } }, 'Unlock all')] : []));
 
     if (!picks.length) { nb.append(el('div', { class: 'notice warn' }, 'Add groups and pick courses in step 2. Your schedule will appear here.')); st.className = 'status warn'; st.textContent = 'Nothing picked yet'; return; }
     if (!lastSols.length) {
